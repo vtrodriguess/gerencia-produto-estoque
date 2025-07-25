@@ -8,7 +8,15 @@ import com.enums.GrupoProduto;
 
 public class Empresa {
 
-	List<Estoque> estoque = new ArrayList<Estoque>();
+	private Estoque estoque;
+	
+	public void setEstoque(Estoque estoque) {
+	    this.estoque = estoque;
+	}
+
+	public Estoque getEstoque() {
+	    return estoque;
+	}
 
 	public Produto cadastrar(int grupo) {
 		Scanner sc = new Scanner(System.in);
@@ -37,6 +45,7 @@ public class Empresa {
 		return p;
 
 	}
+	
 
 	public void faturar(Long id, int quantidade, Produto p) {
 
@@ -47,5 +56,12 @@ public class Empresa {
 			System.out.println("Id inválido");
 		}
 	}
+
+	@Override
+	public String toString() {
+		return estoque.toString();
+	}
+	
+	
 
 }
