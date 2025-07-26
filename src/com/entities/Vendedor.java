@@ -7,10 +7,17 @@ import java.util.Set;
 
 public class Vendedor {
 	
+	private static long contadorId = 1;
 	private Long id;
 	private String nome;
-	public Vendedor(Long id, String nome) {
-		this.id = id;
+	List<Pedido> pedido = new ArrayList<Pedido>();
+	
+	public Vendedor() {
+		
+	}
+	
+	public Vendedor(String nome) {
+		this.id = contadorId++;
 		this.nome = nome;
 	}
 	public Long getId() {
@@ -26,6 +33,9 @@ public class Vendedor {
 		this.nome = nome;
 	}
 	
+	public void addPedido(Pedido p) {
+		pedido.add(p);
+	}
 	
 
 }

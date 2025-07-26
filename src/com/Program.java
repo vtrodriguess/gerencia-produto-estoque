@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.entities.Empresa;
 import com.entities.Estoque;
+import com.entities.ItemPedido;
 import com.entities.Pedido;
 import com.entities.Produto;
 import com.entities.Vendedor;
@@ -49,8 +50,7 @@ public class Program {
 				System.out.println("Senha: ");
 				int senhaVendedor = sc.nextInt();
 				if (senhaVendedor == 123) {
-					Pedido novoPedido = new Pedido();
-					cadastrarPedido(pedidos, novoPedido, listaProduto);
+					menuVendedor(sc, pedidos, pedido, listaProduto);
 					break;
 				} else {
 					System.out.println("Senha inválida para acesso a área de vendedor");
@@ -79,12 +79,13 @@ public class Program {
 			System.out.println(empresa);
 			System.out.println("Saldo: " + empresa.getSaldo());
 		} else if (subMenu == 3) {
-			faturamento(pedidos, listaProdutos, empresa, pedido);
+			faturamento(sc, pedidos, listaProdutos, empresa, pedido);
 		} else if (subMenu == 4) {
 			System.out.println("Id: ");
 			Long id = sc.nextLong();
 			System.out.println("Quantidade: ");
 			int quantidade = sc.nextInt();
+
 			for (Produto reposicaoEstoque : listaProdutos) {
 				empresa.reporEstoque(id, quantidade, reposicaoEstoque);
 			}
@@ -104,9 +105,8 @@ public class Program {
 
 	}
 
-	public static void faturamento(List<Pedido> pedidos, Set<Produto> listaProdutos, Empresa empresa, Pedido pedido) {
-		Scanner sc = new Scanner(System.in);
-
+	public static void faturamento(Scanner sc, List<Pedido> pedidos, Set<Produto> listaProdutos, Empresa empresa,
+			Pedido pedido) {
 		if (pedidos.isEmpty()) {
 			System.out.println("sem produto");
 		} else {
@@ -133,18 +133,37 @@ public class Program {
 
 	}
 
-	public static void cadastrarPedido(List<Pedido> pedidos, Pedido p, Set<Produto> listaProduto) {
-		Scanner sc = new Scanner(System.in);
+	public static void menuVendedor(Scanner sc, List<Pedido> pedidos, Pedido p, Set<Produto> listaProduto) {
+
+		System.out.println("1 - Cadastrar Vendedor \n2 - Gerar Pedido de Venda");
+		int menu = sc.nextInt();
+
+		if (menu == 1) {
+			System.out.println("ID: ");
+
+		} else if (menu == 2) {
+			Pedido novoPedido = new Pedido();
+			cadastrarPedido(sc, pedidos, novoPedido, listaProduto);
+		}
+	}
+
+	public static void cadastrarPedido(Scanner sc, List<Pedido> pedidos, Pedido p, Set<Produto> listaProduto) {
 		int menu = 0;
 		do {
-			Produto produto = p.dadosPedido(listaProduto);
-			p.addProduto(produto);
+			ItemPedido produto = p.dadosPedido(listaProduto);
+			if (produto != null) {
+				p.addProduto(produto);
+			}
 			System.out.println("Adicionar mais produto? \n1-SIM \n2-NAO");
 			menu = sc.nextInt();
 
 		} while (menu != 2);
 
 		pedidos.add(p);
+	}
+	
+	public static void cadastrarVendedor() {
+		System.out.println("ID Vendedor: ");
 	}
 
 }

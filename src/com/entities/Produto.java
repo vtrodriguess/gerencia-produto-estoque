@@ -6,6 +6,7 @@ import com.enums.GrupoProduto;
 
 public class Produto {
 
+	private static long contadorId = 1;
 	private Long id;
 	private String produto;
 	private GrupoProduto gp;
@@ -15,17 +16,9 @@ public class Produto {
 	public Produto() {
 
 	}
-
-	public Produto(Long id, String produto, GrupoProduto gp, double valor, int quantidade) {
-		this.id = id;
-		this.produto = produto;
-		this.gp = gp;
-		this.valor = valor;
-		this.quantidade = quantidade;
-	}
-
-	public Produto(Long id, String produto, double valor, int quantidade) {
-		this.id = id;
+	
+	public Produto(String produto, double valor, int quantidade) {
+		this.id = contadorId++;
 		this.produto = produto;
 		this.valor = valor;
 		this.quantidade = quantidade;

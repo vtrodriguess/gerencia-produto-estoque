@@ -26,8 +26,6 @@ public class Empresa {
 
 	public Produto cadastrar() {
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Id: ");
-		Long id = sc.nextLong();
 		System.out.print("1: GRUPO A \n2: GRUPO B \n3: GRUPO C \n: ");
 		int x = sc.nextInt();
 		sc.nextLine();
@@ -38,7 +36,7 @@ public class Empresa {
 		System.out.print("Quantidade: ");
 		int quantidade = sc.nextInt();
 
-		Produto p = new Produto(id, produto, valor, quantidade);
+		Produto p = new Produto(produto, valor, quantidade);
 
 		if (x == 1) {
 			p.setGp(GrupoProduto.A);
@@ -67,8 +65,8 @@ public class Empresa {
 	public void faturar(Pedido pedido, List<Pedido> pedidos, Set<Produto> listaProdutos, int numeroPedido) {
 		pedido = pedidos.get(numeroPedido);
 		for (Produto p : listaProdutos) {
-			for (Produto produtosPedido : pedido.getPedidos()) {
-				Long id = produtosPedido.getId();
+			for (ItemPedido produtosPedido : pedido.getPedidos()) {
+				Long id = produtosPedido.getProduto().getId();
 				int quantidade = produtosPedido.getQuantidade();
 
 				if (p.getId().equals(id)) {
