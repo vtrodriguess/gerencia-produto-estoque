@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.entities.Empresa;
 import com.entities.Estoque;
+import com.entities.Pedidos;
 import com.entities.Produto;
 import com.entities.Vendedor;
 
@@ -19,6 +20,7 @@ public class Program {
 
 		Set<Produto> listaProduto = new HashSet<>();
 		List<Produto> pendencia = new ArrayList<>();
+		List<Pedidos> pedidos = new ArrayList<>();
 		Estoque estoque = new Estoque();
 		Produto produto = new Produto();
 		Empresa empresa = new Empresa();
@@ -71,9 +73,7 @@ public class Program {
 	public static void cadastrarProduto(Set<Produto> listaProdutos, Estoque estoque, Produto produto, Empresa empresa) {
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("1-GRUPO A \n2-GRUPO B \n3-GRUPO C");
-		int grupo = sc.nextInt();
-		Produto novoProduto = empresa.cadastrar(grupo);
+		Produto novoProduto = empresa.cadastrar();
 		listaProdutos.add(novoProduto);
 		estoque.adicionar(novoProduto);
 
@@ -86,7 +86,7 @@ public class Program {
 			System.out.println("sem produto");
 		} else {
 			for (int i = 0; i < pendencia.size(); i++) {
-				System.out.println("Posição do pedido: " + i + " | " + pendencia.get(i));
+				System.out.println("Posição do pedido: " + i + "\n" + pendencia.get(i));
 			}
 
 			System.out.println("Pedido");
@@ -123,12 +123,20 @@ public class Program {
 
 			switch (menu) {
 			case 1:
-				System.out.println(estoque);
-				break;
+				if(listaProdutos.isEmpty()) {
+					System.out.println("Estoque vazio");
+					break;
+				}
+				else {
+					System.out.println(estoque);
+					break;
+				}
 			case 2:
 				Produto pr = vend.vender(listaProdutos);
-				pendencia.add(pr);
-				break;
+				if(pr != null) {
+					pendencia.add(pr);
+					break;
+				}
 			case 3:
 				System.out.println();
 				break;

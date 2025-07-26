@@ -23,25 +23,27 @@ public class Empresa {
 		return saldo;
 	}
 
-	public Produto cadastrar(int grupo) {
+	public Produto cadastrar() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Id: ");
+		System.out.print("Id: ");
 		Long id = sc.nextLong();
+		System.out.print("1: GRUPO A \n2: GRUPO B \n3: GRUPO C \n: ");
+		int x = sc.nextInt();
 		sc.nextLine();
-		System.out.println("Produto: ");
+		System.out.print("Produto: ");
 		String produto = sc.nextLine();
-		System.out.println("Valor: ");
+		System.out.print("Valor: R$");
 		double valor = sc.nextDouble();
-		System.out.println("Quantidade: ");
+		System.out.print("Quantidade: ");
 		int quantidade = sc.nextInt();
 
 		Produto p = new Produto(id, produto, valor, quantidade);
 
-		if (grupo == 1) {
+		if (x == 1) {
 			p.setGp(GrupoProduto.A);
-		} else if (grupo == 2) {
+		} else if (x == 2) {
 			p.setGp(GrupoProduto.B);
-		} else if (grupo == 3) {
+		} else if (x == 3) {
 			p.setGp(GrupoProduto.C);
 		} else {
 			System.out.println("Invalido");

@@ -8,6 +8,8 @@ import java.util.Set;
 public class Vendedor {
 
 	public Produto vender(Set<Produto> listaProdutos) {
+		
+		List<Pedidos> pedidos = new ArrayList<>();
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Id produto: ");
@@ -17,7 +19,12 @@ public class Vendedor {
 
 		for (Produto p : listaProdutos) {
 			if (p.getId().equals(id)) {
-				return new Produto(id, quantidade);
+				if (p.getQuantidade() >= quantidade) {
+					return new Produto(id, p.getProduto(), p.getGp(), p.getValor(), quantidade);
+				}else {
+					System.out.println("Estoque insuficiente. Disponível: " + p.getQuantidade());
+					return null;
+				}
 			}
 		}
 

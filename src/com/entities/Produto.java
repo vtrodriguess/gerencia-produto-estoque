@@ -5,15 +5,23 @@ import java.util.Objects;
 import com.enums.GrupoProduto;
 
 public class Produto {
-	
+
 	private Long id;
 	private String produto;
 	private GrupoProduto gp;
 	private double valor;
 	private int quantidade;
-	
+
 	public Produto() {
-		
+
+	}
+
+	public Produto(Long id, String produto, GrupoProduto gp, double valor, int quantidade) {
+		this.id = id;
+		this.produto = produto;
+		this.gp = gp;
+		this.valor = valor;
+		this.quantidade = quantidade;
 	}
 
 	public Produto(Long id, String produto, double valor, int quantidade) {
@@ -67,8 +75,8 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		return "Produtos \nID: " + id + " | Nome: " + produto + " | Grupo: " + gp + " | Valor: " + valor + " | Quantidade: "
-				+ quantidade + "\n";
+		return "Produtos \nID: " + id + " | Nome: " + produto + " | Grupo: " + gp + " | Valor: R$" + valor
+				+ " | Quantidade: " + quantidade + "\n";
 	}
 
 	@Override
@@ -87,7 +95,5 @@ public class Produto {
 		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id) && Objects.equals(produto, other.produto);
 	}
-	
-	
 
 }
