@@ -25,7 +25,6 @@ public class Pedido {
 			if (p.getId().equals(id)) {
 				if (p.getQuantidade() >= quantidade) {
 					Produto a = new Produto(id, p.getProduto(), p.getGp(), p.getValor(), quantidade);
-					pedidos.add(a);
 					return a;
 				}else {
 					System.out.println("Estoque insuficiente. Disponível: " + p.getQuantidade());
@@ -38,6 +37,16 @@ public class Pedido {
 
 		return null;
 
+	}
+	
+	@Override
+	public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    for (Produto p : pedidos) {
+	        sb.append(p.toString());
+	        sb.append("-------------------------\n");
+	    }
+	    return sb.toString();
 	}
 
 }

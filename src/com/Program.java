@@ -36,21 +36,13 @@ public class Program {
 
 			switch (menu) {
 			case 1:
-				System.out.println("1-Cadastrar Produto \n2-Estoque \n3-Faturar");
-				int subMenu = sc.nextInt();
-				if (subMenu == 1) {
-					cadastrarProduto(listaProduto, estoque, produto, empresa);
+				System.out.println("Senha: ");
+				int senha = sc.nextInt();
+				if (senha == 1234) {
+					menuEmpresa(sc, listaProduto, estoque, produto, empresa, pedidos);
 					break;
-				} else if (subMenu == 2) {
-					System.out.println(empresa);
-					System.out.println("Saldo: " + empresa.getSaldo());
-					break;
-				} else if (subMenu == 3) {
-					faturamento(pendencia, listaProduto, empresa);
-					break;
-
 				} else {
-					System.out.println("Opção inválida");
+					System.out.println("Senha inválida para acesso a Empresa");
 					break;
 				}
 			case 2:
@@ -70,6 +62,24 @@ public class Program {
 
 	}
 
+	public static void menuEmpresa(Scanner sc, Set<Produto> listaProdutos, Estoque estoque, Produto produto,
+			Empresa empresa, List<Pedido> pedidos) {
+		System.out.println("1-Cadastrar Produto \n2-Estoque \n3-Faturar");
+		int subMenu = sc.nextInt();
+		if (subMenu == 1) {
+			cadastrarProduto(listaProdutos, estoque, produto, empresa);
+		} else if (subMenu == 2) {
+			System.out.println(empresa);
+			System.out.println("Saldo: " + empresa.getSaldo());
+		} else if (subMenu == 3) {
+			faturamento(pedidos, listaProdutos, empresa);
+
+		} else {
+			System.out.println("Opção inválida");
+
+		}
+	}
+
 	public static void cadastrarProduto(Set<Produto> listaProdutos, Estoque estoque, Produto produto, Empresa empresa) {
 		Scanner sc = new Scanner(System.in);
 
@@ -79,21 +89,22 @@ public class Program {
 
 	}
 
-	public static void faturamento(List<Produto> pendencia, Set<Produto> listaProdutos, Empresa empresa) {
+	public static void faturamento(List<Pedido> pedidos, Set<Produto> listaProdutos, Empresa empresa) {
 		Scanner sc = new Scanner(System.in);
 
-		if (pendencia.isEmpty()) {
+		if (pedidos.isEmpty()) {
 			System.out.println("sem produto");
 		} else {
-			for (int i = 0; i < pendencia.size(); i++) {
-				System.out.println("Posição do pedido: " + i + "\n" + pendencia.get(i));
+			for (int i = 0; i < pedidos.size(); i++) {
+				System.out.println("Posição do pedido: " + i + "\n" + pedidos.get(i));
 			}
 
-			System.out.println("Pedido");
+			System.out.println("Pedido: ");
 			int pedido = sc.nextInt();
 
-			Long id = pendencia.get(pedido).getId();
-			int quantidade = pendencia.get(pedido).getQuantidade();
+			Produto produto = pedidos.get(pedido).dadosPedido(listaProdutos);
+			Long id = produto.getId();
+			int quantidade = produto.getQuantidade();
 
 			boolean encontrado = false;
 			for (Produto p : listaProdutos) {
@@ -106,7 +117,7 @@ public class Program {
 			if (!encontrado) {
 				System.out.println("Pedido nao encontrado");
 			}
-			pendencia.remove(pedido);
+			pedidos.remove(pedido);
 		}
 
 	}
