@@ -3,6 +3,7 @@ package com.entities;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.enums.GrupoProduto;
 
@@ -54,14 +55,28 @@ public class Empresa {
 	}
 	
 
-	public void faturar(Long id, int quantidade, Produto p) {
-
-		if (id.equals(p.getId())) {
-			p.setQuantidade(p.getQuantidade() - quantidade);
-			saldo = saldo + (p.getValor() * quantidade);
-
-		} else {
+	public void reporEstoque(Long id, int quantidade, Produto p) {
+		if(id.equals(p.getId())) {
+			p.setQuantidade(p.getQuantidade() + quantidade);
+		}
+		else {
 			System.out.println("Id inválido");
+		}
+	}
+	
+	public void faturar(Pedido pedido, List<Pedido> pedidos, Set<Produto> listaProdutos, int numeroPedido) {
+		pedido = pedidos.get(numeroPedido);
+		for (Produto p : listaProdutos) {
+			for (Produto produtosPedido : pedido.getPedidos()) {
+				Long id = produtosPedido.getId();
+				int quantidade = produtosPedido.getQuantidade();
+
+				if (p.getId().equals(id)) {
+					p.setQuantidade(p.getQuantidade() - quantidade);
+					saldo = saldo + (p.getValor() * quantidade);
+					pedidos.remove(pedido);
+				}
+			}
 		}
 	}
 

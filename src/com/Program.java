@@ -19,7 +19,6 @@ public class Program {
 		Scanner sc = new Scanner(System.in);
 
 		Set<Produto> listaProduto = new HashSet<>();
-		List<Produto> pendencia = new ArrayList<>();
 		List<Pedido> pedidos = new ArrayList<>();
 		Estoque estoque = new Estoque();
 		Produto produto = new Produto();
@@ -32,14 +31,14 @@ public class Program {
 
 		do {
 
-			System.out.println("1-Empresa \n2-Vendedor");
+			System.out.println("1 - Empresa \n2 - Vendedor \n3 - Estoque");
 			menu = sc.nextInt();
 
 			switch (menu) {
 			case 1:
 				System.out.println("Senha: ");
-				int senha = sc.nextInt();
-				if (senha == 1234) {
+				int senhaEmpresa = sc.nextInt();
+				if (senhaEmpresa == 1234) {
 					menuEmpresa(sc, listaProduto, estoque, produto, empresa, pedidos, pedido);
 					break;
 				} else {
@@ -47,14 +46,21 @@ public class Program {
 					break;
 				}
 			case 2:
+				System.out.println("Senha: ");
+				int senhaVendedor = sc.nextInt();
+				if (senhaVendedor == 123) {
+					Pedido novoPedido = new Pedido();
+					cadastrarPedido(pedidos, novoPedido, listaProduto);
+					break;
+				} else {
+					System.out.println("Senha inválida para acesso a área de vendedor");
+					break;
+				}
+			case 3:
 				mostrarEstoque(estoque, listaProduto);
 				break;
-			case 3:
-				Pedido novoPedido = new Pedido();
-				cadastrarPedido(pedidos, novoPedido, listaProduto);
-				break;
 			case 4:
-				break;
+				System.out.println("Encerrando");
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + menu);
 			}
@@ -74,6 +80,14 @@ public class Program {
 			System.out.println("Saldo: " + empresa.getSaldo());
 		} else if (subMenu == 3) {
 			faturamento(pedidos, listaProdutos, empresa, pedido);
+		} else if (subMenu == 4) {
+			System.out.println("Id: ");
+			Long id = sc.nextLong();
+			System.out.println("Quantidade: ");
+			int quantidade = sc.nextInt();
+			for (Produto reposicaoEstoque : listaProdutos) {
+				empresa.reporEstoque(id, quantidade, reposicaoEstoque);
+			}
 
 		} else {
 			System.out.println("Opção inválida");
@@ -99,28 +113,10 @@ public class Program {
 			for (int i = 0; i < pedidos.size(); i++) {
 				System.out.println("Posição do pedido: " + i + "\n" + pedidos.get(i));
 			}
-
 			System.out.println("Pedido: ");
 			int numeroPedido = sc.nextInt();
 
-			pedido = pedidos.get(numeroPedido);
-
-			boolean encontrado = false;
-			for (Produto p : listaProdutos) {
-				for (Produto produtosPedido : pedido.getPedidos()) {
-					Long id = produtosPedido.getId();
-					int quantidade = produtosPedido.getQuantidade();
-					
-					if (p.getId().equals(id)) {
-						empresa.faturar(id, quantidade, p);
-						encontrado = true;
-					}
-				}
-			}
-			if (!encontrado) {
-				System.out.println("Pedido nao encontrado");
-			}
-			pedidos.remove(pedido);
+			empresa.faturar(pedido, pedidos, listaProdutos, numeroPedido);
 		}
 
 	}
