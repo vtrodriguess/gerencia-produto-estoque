@@ -1,6 +1,5 @@
 package com.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -62,7 +61,8 @@ public class Empresa {
 		}
 	}
 	
-	public void faturar(Pedido pedido, List<Pedido> pedidos, Set<Produto> listaProdutos, int numeroPedido) {
+	public void faturar(List<Pedido> pedidos, Set<Produto> listaProdutos, int numeroPedido) {
+		Pedido pedido = new Pedido();
 		pedido = pedidos.get(numeroPedido);
 		for (Produto p : listaProdutos) {
 			for (ItemPedido produtosPedido : pedido.getPedidos()) {
@@ -72,10 +72,11 @@ public class Empresa {
 				if (p.getId().equals(id)) {
 					p.setQuantidade(p.getQuantidade() - quantidade);
 					saldo = saldo + (p.getValor() * quantidade);
-					pedidos.remove(pedido);
 				}
 			}
 		}
+		pedidos.remove(pedido);
+		System.out.println("Pedido faturado com sucesso");
 	}
 
 	@Override

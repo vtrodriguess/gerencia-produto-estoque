@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Estoque {
 
-	List<Produto> produto = new ArrayList<Produto>();
+	private List<Produto> produto = new ArrayList<Produto>();
 
 	public List<Produto> getProduto() {
 		return produto;

@@ -2,15 +2,13 @@ package com.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
 
 public class Vendedor {
 	
 	private static long contadorId = 1;
 	private Long id;
 	private String nome;
-	List<Pedido> pedido = new ArrayList<Pedido>();
+	private List<Pedido> pedido = new ArrayList<Pedido>();
 	
 	public Vendedor() {
 		
@@ -36,6 +34,12 @@ public class Vendedor {
 	public void addPedido(Pedido p) {
 		pedido.add(p);
 	}
+
+	@Override
+	public String toString() {
+		return "Vendedor [id=" + id + ", nome=" + nome + "]";
+	}
+	
 	
 
 }

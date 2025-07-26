@@ -6,26 +6,29 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Pedido {
-	
-	List<ItemPedido> pedidos = new ArrayList<>();
-	
-	public void addProduto(ItemPedido p) {
-		pedidos.add(p);
-	}
-	
-	
-	
+
+	private List<ItemPedido> pedidos = new ArrayList<>();
+	private Vendedor vendedor;
+
 	public List<ItemPedido> getPedidos() {
 		return pedidos;
 	}
-
-
 
 	public void setPedidos(List<ItemPedido> pedidos) {
 		this.pedidos = pedidos;
 	}
 
+	public Vendedor getVendedor() {
+		return vendedor;
+	}
 
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
+	}
+
+	public void addProduto(ItemPedido p) {
+		pedidos.add(p);
+	}
 
 	public ItemPedido dadosPedido(Set<Produto> listaProdutos) {
 
@@ -39,9 +42,7 @@ public class Pedido {
 			if (p.getId().equals(id)) {
 				if (p.getQuantidade() >= quantidade) {
 					return new ItemPedido(p, quantidade);
-					//Produto a = new Produto(p.getId(), p.getProduto(), p.getGp(), p.getValor(), quantidade);
-					//return a;
-				}else {
+				} else {
 					System.out.println("Estoque insuficiente. Disponível: " + p.getQuantidade());
 					return null;
 				}
@@ -53,15 +54,17 @@ public class Pedido {
 		return null;
 
 	}
-	
+
 	@Override
 	public String toString() {
-	    StringBuilder sb = new StringBuilder();
-	    for (ItemPedido p : pedidos) {
-	        sb.append(p.toString());
-	        sb.append("-------------------------\n");
-	    }
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append("Vendedor responsável: ").append(vendedor).append("\n");
+		sb.append("-------------------------\n");
+		for (ItemPedido p : pedidos) {
+			sb.append(p.toString());
+			sb.append("-------------------------\n");
+		}
+		return sb.toString();
 	}
 
 }
