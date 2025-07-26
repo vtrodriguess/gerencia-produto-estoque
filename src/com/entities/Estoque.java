@@ -17,7 +17,12 @@ public class Estoque  {
 
 	@Override
 	public String toString() {
-		return "Estoque " + produto;
+	    StringBuilder sb = new StringBuilder();
+	    for (Produto p : produto) {
+	        sb.append(p.toString());
+	        sb.append("-------------------------\n");
+	    }
+	    return sb.toString();
 	}
 	
 	

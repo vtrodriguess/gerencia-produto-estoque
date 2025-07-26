@@ -9,6 +9,7 @@ import com.enums.GrupoProduto;
 public class Empresa {
 
 	private Estoque estoque;
+	private double saldo;
 	
 	public void setEstoque(Estoque estoque) {
 	    this.estoque = estoque;
@@ -16,6 +17,10 @@ public class Empresa {
 
 	public Estoque getEstoque() {
 	    return estoque;
+	}
+	
+	public double getSaldo() {
+		return saldo;
 	}
 
 	public Produto cadastrar(int grupo) {
@@ -51,6 +56,7 @@ public class Empresa {
 
 		if (id.equals(p.getId())) {
 			p.setQuantidade(p.getQuantidade() - quantidade);
+			saldo = saldo + (p.getValor() * quantidade);
 
 		} else {
 			System.out.println("Id inválido");

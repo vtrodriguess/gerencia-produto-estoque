@@ -42,6 +42,7 @@ public class Program {
 				}
 				else if(subMenu == 2) {
 					System.out.println(empresa);
+					System.out.println("Saldo: " + empresa.getSaldo());
 					break;
 				}
 				else if(subMenu == 3) {
@@ -54,7 +55,7 @@ public class Program {
 					break;
 				}
 			case 2:
-				vendedor(estoque, pendencia, vend);
+				vendedor(estoque, pendencia, vend, listaProduto);
 				break;
 			case 3:
 				System.out.println("Saindo");
@@ -85,7 +86,7 @@ public class Program {
 			System.out.println("sem produto");
 		} else {
 			for (int i = 0; i < pendencia.size(); i++) {
-				System.out.println(i + " | " + pendencia.get(i));
+				System.out.println("Posição do pedido: " + i + " | " + pendencia.get(i));
 			}
 
 			System.out.println("Pedido");
@@ -110,7 +111,7 @@ public class Program {
 
 	}
 
-	public static void vendedor(Estoque estoque, List<Produto> pendencia, Vendedor vend) {
+	public static void vendedor(Estoque estoque, List<Produto> pendencia, Vendedor vend, Set<Produto> listaProdutos) {
 		Scanner sc = new Scanner(System.in);
 
 		int menu = 0;
@@ -125,7 +126,7 @@ public class Program {
 				System.out.println(estoque);
 				break;
 			case 2:
-				Produto pr = vend.vender();
+				Produto pr = vend.vender(listaProdutos);
 				pendencia.add(pr);
 				break;
 			case 3:

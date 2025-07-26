@@ -64,21 +64,11 @@ public class Produto {
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
-	
-	public void faturar(Long id, int quantidade) {
-		
-		if(id == this.id) {
-			this.quantidade = this.quantidade - quantidade;
-		}
-		else {
-			System.out.println("Id inválido");
-		}
-	}
 
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", produto=" + produto + ", gp=" + gp + ", valor=" + valor + ", quantidade="
-				+ quantidade + "]";
+		return "Produtos \nID: " + id + " | Nome: " + produto + " | Grupo: " + gp + " | Valor: " + valor + " | Quantidade: "
+				+ quantidade + "\n";
 	}
 
 	@Override
