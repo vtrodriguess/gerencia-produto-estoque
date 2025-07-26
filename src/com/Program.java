@@ -25,6 +25,7 @@ public class Program {
 		Produto produto = new Produto();
 		Empresa empresa = new Empresa();
 		Vendedor vend = new Vendedor();
+		Pedido pedido = new Pedido();
 		empresa.setEstoque(estoque);
 
 		int menu = 0;
@@ -39,7 +40,7 @@ public class Program {
 				System.out.println("Senha: ");
 				int senha = sc.nextInt();
 				if (senha == 1234) {
-					menuEmpresa(sc, listaProduto, estoque, produto, empresa, pedidos);
+					menuEmpresa(sc, listaProduto, estoque, produto, empresa, pedidos, pedido);
 					break;
 				} else {
 					System.out.println("Senha inválida para acesso a Empresa");
@@ -63,7 +64,7 @@ public class Program {
 	}
 
 	public static void menuEmpresa(Scanner sc, Set<Produto> listaProdutos, Estoque estoque, Produto produto,
-			Empresa empresa, List<Pedido> pedidos) {
+			Empresa empresa, List<Pedido> pedidos, Pedido pedido) {
 		System.out.println("1-Cadastrar Produto \n2-Estoque \n3-Faturar");
 		int subMenu = sc.nextInt();
 		if (subMenu == 1) {
@@ -72,7 +73,7 @@ public class Program {
 			System.out.println(empresa);
 			System.out.println("Saldo: " + empresa.getSaldo());
 		} else if (subMenu == 3) {
-			faturamento(pedidos, listaProdutos, empresa);
+			faturamento(pedidos, listaProdutos, empresa, pedido);
 
 		} else {
 			System.out.println("Opção inválida");
@@ -89,7 +90,7 @@ public class Program {
 
 	}
 
-	public static void faturamento(List<Pedido> pedidos, Set<Produto> listaProdutos, Empresa empresa) {
+	public static void faturamento(List<Pedido> pedidos, Set<Produto> listaProdutos, Empresa empresa, Pedido pedido) {
 		Scanner sc = new Scanner(System.in);
 
 		if (pedidos.isEmpty()) {
@@ -100,18 +101,20 @@ public class Program {
 			}
 
 			System.out.println("Pedido: ");
-			int pedido = sc.nextInt();
+			int numeroPedido = sc.nextInt();
 
-			Produto produto = pedidos.get(pedido).dadosPedido(listaProdutos);
-			Long id = produto.getId();
-			int quantidade = produto.getQuantidade();
+			pedido = pedidos.get(numeroPedido);
 
 			boolean encontrado = false;
 			for (Produto p : listaProdutos) {
-				if (p.getId().equals(id)) {
-					empresa.faturar(id, quantidade, p);
-					encontrado = true;
-					break;
+				for (Produto produtosPedido : pedido.getPedidos()) {
+					Long id = produtosPedido.getId();
+					int quantidade = produtosPedido.getQuantidade();
+					
+					if (p.getId().equals(id)) {
+						empresa.faturar(id, quantidade, p);
+						encontrado = true;
+					}
 				}
 			}
 			if (!encontrado) {

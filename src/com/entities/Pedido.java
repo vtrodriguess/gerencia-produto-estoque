@@ -13,6 +13,20 @@ public class Pedido {
 		pedidos.add(p);
 	}
 	
+	
+	
+	public List<Produto> getPedidos() {
+		return pedidos;
+	}
+
+
+
+	public void setPedidos(List<Produto> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+
+
 	public Produto dadosPedido(Set<Produto> listaProdutos) {
 
 		Scanner sc = new Scanner(System.in);
