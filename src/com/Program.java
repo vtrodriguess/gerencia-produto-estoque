@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.entities.Empresa;
 import com.entities.Estoque;
-import com.entities.Pedidos;
+import com.entities.Pedido;
 import com.entities.Produto;
 import com.entities.Vendedor;
 
@@ -20,7 +20,7 @@ public class Program {
 
 		Set<Produto> listaProduto = new HashSet<>();
 		List<Produto> pendencia = new ArrayList<>();
-		List<Pedidos> pedidos = new ArrayList<>();
+		List<Pedido> pedidos = new ArrayList<>();
 		Estoque estoque = new Estoque();
 		Produto produto = new Produto();
 		Empresa empresa = new Empresa();
@@ -41,32 +41,32 @@ public class Program {
 				if (subMenu == 1) {
 					cadastrarProduto(listaProduto, estoque, produto, empresa);
 					break;
-				}
-				else if(subMenu == 2) {
+				} else if (subMenu == 2) {
 					System.out.println(empresa);
 					System.out.println("Saldo: " + empresa.getSaldo());
 					break;
-				}
-				else if(subMenu == 3) {
+				} else if (subMenu == 3) {
 					faturamento(pendencia, listaProduto, empresa);
 					break;
-					
-				}
-				else {
+
+				} else {
 					System.out.println("Opção inválida");
 					break;
 				}
 			case 2:
-				vendedor(estoque, pendencia, vend, listaProduto);
+				mostrarEstoque(estoque, listaProduto);
 				break;
 			case 3:
-				System.out.println("Saindo");
+				Pedido novoPedido = new Pedido();
+				cadastrarPedido(pedidos, novoPedido, listaProduto);
+				break;
+			case 4:
 				break;
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + menu);
 			}
 
-		} while (menu != 3);
+		} while (menu != 4);
 
 	}
 
@@ -111,40 +111,30 @@ public class Program {
 
 	}
 
-	public static void vendedor(Estoque estoque, List<Produto> pendencia, Vendedor vend, Set<Produto> listaProdutos) {
+	public static void mostrarEstoque(Estoque estoque, Set<Produto> listaProdutos) {
+
+		if (listaProdutos.isEmpty()) {
+			System.out.println("Estoque vazio");
+
+		} else {
+			System.out.println(estoque);
+
+		}
+
+	}
+
+	public static void cadastrarPedido(List<Pedido> pedidos, Pedido p, Set<Produto> listaProduto) {
 		Scanner sc = new Scanner(System.in);
-
 		int menu = 0;
-
 		do {
-
-			System.out.println("1-Estoque \n2-Vender");
+			Produto produto = p.dadosPedido(listaProduto);
+			p.addProduto(produto);
+			System.out.println("Adicionar mais produto? \n1-SIM \n2-NAO");
 			menu = sc.nextInt();
 
-			switch (menu) {
-			case 1:
-				if(listaProdutos.isEmpty()) {
-					System.out.println("Estoque vazio");
-					break;
-				}
-				else {
-					System.out.println(estoque);
-					break;
-				}
-			case 2:
-				Produto pr = vend.vender(listaProdutos);
-				if(pr != null) {
-					pendencia.add(pr);
-					break;
-				}
-			case 3:
-				System.out.println();
-				break;
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + menu);
-			}
+		} while (menu != 2);
 
-		} while (menu != 3);
+		pedidos.add(p);
 	}
 
 }
