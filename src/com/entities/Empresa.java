@@ -23,18 +23,7 @@ public class Empresa {
 		return saldo;
 	}
 
-	public Produto cadastrar() {
-		Scanner sc = new Scanner(System.in);
-		System.out.print("1: GRUPO A \n2: GRUPO B \n3: GRUPO C \n: ");
-		int x = sc.nextInt();
-		sc.nextLine();
-		System.out.print("Produto: ");
-		String produto = sc.nextLine();
-		System.out.print("Valor: R$");
-		double valor = sc.nextDouble();
-		System.out.print("Quantidade: ");
-		int quantidade = sc.nextInt();
-
+	public Produto cadastrar(String produto, double valor, int quantidade, int x) {
 		Produto p = new Produto(produto, valor, quantidade);
 
 		if (x == 1) {
