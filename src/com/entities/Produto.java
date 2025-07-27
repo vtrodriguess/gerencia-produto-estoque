@@ -74,7 +74,7 @@ public class Produto {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, produto);
+		return Objects.hash(produto);
 	}
 
 	@Override
@@ -86,7 +86,9 @@ public class Produto {
 		if (getClass() != obj.getClass())
 			return false;
 		Produto other = (Produto) obj;
-		return Objects.equals(id, other.id) && Objects.equals(produto, other.produto);
+		return Objects.equals(produto, other.produto);
 	}
 
+	
+	
 }

@@ -1,17 +1,18 @@
 package com.entities;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Estoque {
 
-	private List<Produto> produto = new ArrayList<Produto>();
+	private Set<Produto> produto =  new HashSet<>();
 
-	public List<Produto> getProduto() {
+	public Set<Produto> getProduto() {
 		return produto;
 	}
 
-	public void setProduto(List<Produto> produto) {
+	public void setProduto(Set<Produto> produto) {
 		this.produto = produto;
 	}
 
